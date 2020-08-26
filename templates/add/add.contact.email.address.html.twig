@@ -1,0 +1,39 @@
+{% extends 'spam4u.base.html.twig' %}
+
+{% block title %}Manage account!{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <div class="topic-box">
+            <h2>Add contact email address</h2>
+        </div>
+        <div class="content-box">
+            Add a new contact email address<br>
+            More contact == more spam<br>
+            <br>
+
+            {% for message in app.flashes('duplicated-email-error') %}
+                <div class="col-sm-12">
+                    <div class="alert alert-danger ">
+                        <h2>{{ message }}</h2>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('contact-email-address-added') %}
+                <div class="col-sm-12">
+                    <div class="alert alert-success">
+                        <h2>{{ message }}</h2>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+            <br><br>
+        </div>
+    </div>
+{% endblock %}

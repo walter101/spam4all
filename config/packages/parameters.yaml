@@ -1,0 +1,8 @@
+parameters:
+    enable_moviedatabase_api_calls: true
+    spam4all_email: spam4all@nonexistingemail.com
+    spam4all_password: test
+    spam4all_username: spam
+    spam4all_secret: spam4all
+    spam4all_redirect_uri: http://host.docker.internal:8600/oauth-authorization-client-redirect-url
+    spam4all_user_id: 22

@@ -1,0 +1,80 @@
+{%  extends 'spam4u.base.html.twig' %}
+
+{% block title %}Manage account!{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h2>We spam 4 you.</h2>
+    <p>
+        >> Register for an free account <<<br>
+        After registration you can add email addresses to your account.<br>
+        Then you can use our lovely spam generator to send all your contacts the same message at once!<br>
+    </p>
+
+    <h2>Spam like a pro!</h2>
+    <p>
+        Import all your contacts from Xmail.<br>
+        Click on the button below to grand us access to fetch all the contacs from you Xmail account.<br>
+    </p>
+
+    {% if user is not null %}
+        <form action="{{ path('startOauthAuthorizationClientProcess') }}">
+            <button class="btn btn-lg btn-light" type="submit" value="Opslaan" >Grand access!</button><br>
+        </form>
+    {% endif %}
+    <br>
+
+
+    {% if refreshToken is not null %}
+        <form action="{{ path('fetchEmailContacts') }}">
+            <button class="btn btn-lg btn-light" type="submit" value="FetchEmailContacts" >Fetch email contacts</button><br>
+        </form>
+    {% endif %}
+
+    <br>
+    <h2>Oauth flow</h2>
+
+    <h3>1. click on 'Register Spam4U as a client' in the footer</h3>
+    This will make a GET request to Xmail registering Spam4U as a client.<br>
+    <b>Xmail will register Spam4U:</b><br>
+    - creating a User<br>
+    - creating a client<br>
+    - creating a Jwt for this client to identiy itself<br>
+    <br>
+
+    After registration as a client Spam4U can ask a User for permission to fetch its contactEmailAddresses at Xmail<br>
+    The user will have to grand access to the emails<br>
+    <br>
+
+    <h3>2. Click on 'grand access' will result in a redirect to Xmail</h3>
+    The user will have to log in at Xmail<br>
+    Xmail will ask the user if he wants to grand access to Spam4U to fetch its emailAddresses<br>
+    <br>
+
+    <b>AuthorizationCode</b><br>
+    If the User grands access Spam4U will get a authorisation code<br>
+    The authorization code is a uuid<br>
+    This authorization code is linked to the LoggedIn user at Spam4U and remoteUser at Xmail<br>
+    <br>
+
+    <h3>3. Exchange authorization code for RefreshToken</h3>
+    This authorization code is exchanged for a refresh token by making a request to Xmail<br>
+    Xmail will create a RefreshToken and sends that back to Spam4U<br>
+    Spam4U stored the RefreshToken in the database connecting it to the local and remote user<br>
+    now he can use this refreshToken to make a Request to Xmail to ask for the emailAddresses<br>
+    <br>
+
+    <h3>4. Fetch EmailAddresses</h3>
+    Click on 'Fetch email contacts' in the footer<br>
+    Spam4U will identify itself in the headers using the JWT it got after registering as a client<br>
+    Spam4U will provide the refreshToken<br>
+    Xmail will check if the RefreshToken is valid
+    If valid refreshToken: return an array with all the emailAddresses for the user connected to this RefreshToken<br>
+    <br>
+
+    <b>Possible variant: use the RefreshToken to get a access token</b><br>
+    A RefreshToken gives the Client to possibility to ask for an access token<br>
+    An access token is short lived (mins/hours) and RefreshToken is long lived (years)<br>
+    So in stead of using the RefreshToken directly use an extra step to exchange the RefreshToken for access token<br>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'spam4u.base.html.twig' %}
+
+{% block title %}Manage account!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="topic-box">
+            <h2>What did the user decide?</h2>
+        </div>
+        <div class="content-box">
+            {% if authorizationStatus %}
+            <p>
+                We got authorized to fetch your emailcontacts.<br>
+                We will now try to fetchs your email contact addresses and insert them here in your Spam4All account.<br>
+                The temp code we got back from the authorization server is: {{ authorizationCode }} for User: {{ authorizedUserId }}<br>
+                loggedInUser: {{ loggedInUserId }}
+            </p>
+            {%  else %}
+                <p>
+                    We did not got authorized to fetchs your contactemails.<br>
+                    If you change your mind hit the grand access button again.<br>
+                <form action="{{ path('startOauthAuthorizationClientProcess') }}">
+                    <button class="btn btn-lg btn-light" type="submit" value="Opslaan" >Grand access!</button><br>
+                </form>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

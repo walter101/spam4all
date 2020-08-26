@@ -1,0 +1,70 @@
+{% extends 'spam4u.base.html.twig' %}
+
+{% block title %}Register!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}"  />
+{%  endblock %}
+
+{% block body %}
+ <div class="container">
+     {{ form_start(form, {'attr': {'class': 'form-signin', novalidate: 'novalidate'}}) }}
+     <div class="row">
+         {%  for message in app.flashes('usernametaken')%}
+            <div class="col-sm-12">
+                <div class="alert-danger">
+                    <h1 class="h3 mb-3 font-weight-normal">{{ message }}</h1>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% if app.session.flashBag.peek('success')|length > 0 %}
+            {%  for message in app.flashes('success')%}
+                <div class="col-sm-12">
+                    <div class="alert alert-success">
+                        <h1 class="h3 mb-3 font-weight-normal">{{ message }}</h1>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            {%  for message in app.flashes('success-edit')%}
+                <div class="col-sm-12">
+                    <div class="alert-success">
+                        <h1 class="h3 mb-3 font-weight-normal">{{ message }}</h1>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-sm-6 text-left">
+                {{ form_row(form.person.firstName) }}
+            </div>
+            <div class="col-sm-6 text-left">
+                {{ form_row(form.person.lastName) }}
+            </div>
+            <div class="col-sm-6 text-left">
+                {{ form_row(form.person.streetName) }}
+            </div>
+            <div class="col-sm-6 text-left">
+                {{ form_row(form.person.streetNumber) }}
+            </div>
+            <div class="col-sm-12 text-left">
+                {{ form_row(form.person.zipcode) }}
+            </div>
+            <div class="col-sm-6 text-left">
+                {{ form_row(form.email) }}
+            </div>
+            <div class="col-sm-6 text-left">
+                {{ form_row(form.password) }}
+            </div>
+
+            <div class="col-sm-12">&nbsp;</div>
+            {{ form_end(form) }}
+        {% endif %}
+    </div>
+</div>
+<div>
+    {% if user is defined %}
+        {{ dump(user) }}
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends 'spam4u.base.html.twig' %}
+
+{% block title %}Manage account!{% endblock %}
+
+{%  block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/account.css') }}" />
+{%  endblock %}
+
+{% block body %}
+<div class="container">
+
+    {{ form_start(userForm) }}
+    <div class="col-sm-12">
+        <h3>Hallo, {{ app.user.firstName }}</h3>
+    </div>
+    <div class="col-sm-12">
+        <p>
+            Werk je personal details bij of renew je apiToken.<br>
+            Met je apiToken kun je met Postman om filmdata op te halen.<br>
+            Je apiToke is je identifier waarmee je bewijst dat jij toegang hebt tot de database<br>
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="h3 mb-3 font-weight-normal">Jou gegevens:</h1>
+        </div>
+
+        {% for message in app.flashes('success-edit') %}
+            <div class="col-sm-12">
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 text-left">
+            {{ form_row(userForm.person.firstName) }}
+        </div>
+        <div class="col-sm-6 text-left">
+            {{ form_row(userForm.person.lastName) }}
+        </div>
+        <div class="col-sm-6 text-left">
+            {{ form_row(userForm.person.streetName) }}
+        </div>
+        <div class="col-sm-6 text-left">
+            {{ form_row(userForm.person.streetNumber) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 text-left">
+            {{ form_row(userForm.person.zipcode) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6 text-left">
+            {{ form_row(userForm.email) }}
+        </div>
+        <div class="col-sm-6 text-left">
+            {{ form_row(userForm.password) }}
+        </div>
+    </div>
+    {{ form_end(userForm) }}
+
+
+{#    {{ form_start(apiTokenForm) }}#}
+{#    <div class="row">#}
+{#        <div class="col-sm-12">#}
+{#            <h1 class="h3 mb-3 font-weight-normal">ApiToken</h1>#}
+{#            <p>#}
+{#                Gebruik de api token (JWT) in de authorization header bij een api call<br>#}
+{#                Jou id = {{ user.id }}#}
+{#            </p>#}
+
+{#            {% for message in app.flashes('renew-api-token=success') %}#}
+{#                <div class="col-sm-12">#}
+{#                    <div class="alert alert-success">#}
+{#                        {{ message }}#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        </div>#}
+
+{#        <div class="col-sm-12 text-left">#}
+{#            {{ form_row(apiTokenForm.token) }}#}
+{#        </div>#}
+{#        <div class="col-sm-12 text-left">#}
+{#            {{ form_row(apiTokenForm.expiresAt) }}#}
+{#        </div>#}
+{#        <div class="col-sm-12 text-left">#}
+{#            {{ form_row(apiTokenForm.active) }}#}
+{#        </div>#}
+{#    </div>#}
+{#    {{ form_end(apiTokenForm) }}#}
+
+</div>
+{% endblock %}

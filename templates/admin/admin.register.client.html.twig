@@ -1,0 +1,43 @@
+{% extends 'spam4u.base.html.twig' %}
+
+{% block title %}Manage account!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="topic-box">
+            <h2>Register Spam4U as client</h2>
+        </div>
+        <div class="content-box">
+
+            <h2>Automatic registration client</h2>
+            <p>
+            To make testing easier: I automated the registration process for this client at Xmail<br>
+            By visiting this page the script registeres Spam4U as a client at Xmail (if it wasn't registered before)<br>
+            This request fetches the jwt Spam4U need to use in the header to make requests to Xmail<br>
+            </p>
+
+            <h3>Details:</h3>
+            <p>
+            Used secret: Spam4U<br>
+            Email: spam4all@nonexistingemail.com<br>
+            Password: test<br>
+            </p>
+
+            <h3>Result of the request:</h3>
+            <div>
+                <span style="font-weight:bolder;">Action: </span>
+                {{ action }}
+            </div>
+            <div style="word-wrap:break-word;">
+                <span style="font-weight:bolder;">Remote_user_id:</span> (user.id @ Xmail for this client: we need this id in temp-code-request stored in parameters (spam4all_user_id))
+                {{ remote_user_id }}
+            </div>
+            <div style="word-wrap:break-word;">
+                <span style="font-weight:bolder;">Jwt client: </span>
+                {{ jwt }}
+            </div>
+
+
+        </div>
+    </div>
+{% endblock %}

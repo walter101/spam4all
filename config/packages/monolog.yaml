@@ -1,2 +1,2 @@
 monolog:
-    channels: ['markdown']
+    channels: ['markdown', 'moviedatabase', 'api_call_logging']

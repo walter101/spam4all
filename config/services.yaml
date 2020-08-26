@@ -12,7 +12,21 @@ services:
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
         bind:
+            #######################################################################
+            # Configure a service in a variable
+            # Used to pass this service in any other service by injecting this variable as argument #
+            #######################################################################
             $markdownLogger: '@monolog.logger.markdown'
+            #######################################################################
+            # Configure loggers with specific channels #
+            #######################################################################
+            $moviedatabaseLogger: '@monolog.logger.moviedatabase'
+            $apiCallLogger: '@monolog.logger.api_call_logging'
+            #######################################################################
+            # Configure some global variables who will deliver envars to services #
+            #######################################################################
+            $isApiCallActive: '%env(IS_API_CALL_ACTIVE)%'
+            $apiKey: '%env(API_KEY)%'
             $isDebug: '%kernel.environment%'
 
     # makes classes in src/ available to be used as services
@@ -27,7 +41,6 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-
-
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+

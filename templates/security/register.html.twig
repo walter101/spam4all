@@ -1,0 +1,70 @@
+{% extends 'spam4u.base.html.twig' %}
+
+{% block title %}Register!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}"  />
+{%  endblock %}
+
+{% block body %}
+<div class="container">
+    <form class="form-signin" method="post">
+        <div class="row">
+            {% for message in app.flashes('success') %}
+                <div class="alert-success">{{ message }}</div>
+            {% endfor %}
+            {% if userExists %}
+                <div class="col-sm-12">
+                    <h1 class="h3 mb-3 font-weight-normal">This email is allready present in our lovely database!</h1>
+                </div>
+            {% endif %}
+            {%  if registrationState is defined and registrationState == 'succes'%}
+                <div class="col-sm-12">
+                    <h1 class="h3 mb-3 font-weight-normal">Registratie succevol!</h1>
+                </div>
+            {% else %}
+                <div class="col-sm-12">
+                    <h1 class="h3 mb-3 font-weight-normal">Registreren</h1>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <label for="inputFirstname" class="">Voornaam</label>
+                    <input type="text" name="firstname" id="inputFirstname" class="form-control" placeholder="Voornaam" value="{% if formValues.firstname is defined %}{{ formValues.firstname }}{% endif %}" required>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <label for="inputLastname" class="">Achternaam</label>
+                    <input type="text" name="lastname" id="inputLastname" class="form-control" placeholder="Achternaam" value="{% if formValues.lastname is defined %}{{ formValues.lastname }}{% endif %}" required>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <label for="inputStreetname" class="">Straat</label>
+                    <input type="text" name="streetname" id="inputstreetname" class="form-control" placeholder="Straat" value="{% if formValues.streetname is defined %}{{ formValues.streetname }}{% endif %}" required>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <label for="inputStreetNumber" class="">Huisnummer</label>
+                    <input type="text" name="streetnumber" id="inputStreetNumber" class="form-control" placeholder="Huisnummer" value="{% if formValues.streetnumber is defined %}{{ formValues.streetnumber }}{% endif %}" required>
+                </div>
+                <div class="col-sm-12 text-left">
+                    <label for="inputZipcode" class="">Postcode</label>
+                    <input type="text" name="zipcode" id="inputZipcode" class="form-control" placeholder="Postcode" value="{% if formValues.zipcode is defined %}{{ formValues.zipcode }}{% endif %}" maxlength="6" required>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <label for="inputEmail" class="">Email</label>
+                    <input type="text" name="email" id="inputEmail" class="form-control" placeholder="email" value="{% if formValues.email is defined %}{{ formValues.email }}{% endif %}" required>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <label for="inputPassword" class="">wachtwoord</label>
+                    <input type="text" name="password" id="inputPassword" class="form-control" placeholder="wachtwoord" value="{% if formValues.password is defined %}{{ formValues.password }}{% endif %}" required>
+                </div>
+
+                <div class="col-sm-12">&nbsp;</div>
+
+                <div class="col-sm-12">
+                    <input type="hidden" name="submitcheckpersonaldetail" value="submitted" />
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('loginform') }}">
+                    <button class="btn btn-lg btn-light" type="submit" value="Opslaan" >Registreer</button>
+                </div>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% endblock %}

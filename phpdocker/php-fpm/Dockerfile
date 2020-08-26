@@ -6,5 +6,15 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install selected extensions and other stuff
 RUN apt-get update \
-    && apt-get -y --no-install-recommends install  php7.4-mysql php-xdebug php-yaml \
+    && apt-get -y --no-install-recommends install \
+        php7.4-mysql \
+        php-xdebug php-yaml \
+        zlib1g-dev \
+        libxml2-dev \
+        librabbitmq-dev \
+    && docker-php-ext-install \
+        pdo_mysql \
+        zip \
+    && pecl install amqp \
+    && docker-php-ext-enable amqp \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*

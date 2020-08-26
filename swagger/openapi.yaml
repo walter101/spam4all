@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Swagger Movie application
+
+servers:
+  - url: http://localhost:8000
+
+paths:
+  /testwp:
+    get:
+      summary: Test end point
+      responses:
+        '200':
+          description: This test end-point will return the string 'ok'
+
+  /api/search/year/{year}:
+    get:
+      security:
+        - bearerAuth: []
+      summary: Request a json array with movies from a specific year using query variable
+      parameters:
+        - in: path
+          name: year
+          schema:
+            type: integer
+          required: true
+          description: Numeric value of the year
+      responses:
+        200:
+          description: Json array with movies
+        401:
+          description: Authorization header is missing
+        500:
+          description: Unknown Jwt, or expired Jwt, or Jwt is inactive
+
+  /api/search/title:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Request a json array with movies using the provided title (or part of it) in the request body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+                  example: snatch
+      responses:
+        200:
+          description: Json array with movies
+        401:
+          description: Authorization header is missing
+        500:
+          description: Unknown Jwt, or expired Jwt, or Jwt is inactive
+
+
+  /checkjwt:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Check jwt
+      description: Check if the used JWT is valid
+      responses:
+        200:
+          description: Jwt is valid
+        401:
+          description: Authorization header is missing
+        500:
+          description: Unknown Jwt, or expired Jwt, or Jwt is inactive
+
+  /user:
+    post:
+      security:
+        - bearerAuth: []
+      summary: Edit user
+      description: Post your personal details to update then in our system
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        200:
+          description: Update successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        401:
+          description: Failed authorization
+        500:
+          description: An fatal error was thrown
+
+components:
+  schemas:
+    user:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        firstName:
+          type: string
+          example: Jan
+        lastName:
+          type: string
+          example: Janssen
+        streetName:
+          type: string
+          example: Donaudal
+        streetNumber:
+          type: string
+          example: 67
+        zipcode:
+          type: string
+          example: 7007hc
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+
+#      *    "id" : 4,
+#      *    "firstName" : "walter",
+#      *    "lastName" : "pothof",
+#      *    "streetName" : "donaudal",
+#      *    "streetNumber" : 67,
+#      *    "zipcode" : "7007hc"
+
