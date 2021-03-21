@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Processor\ProcessorChain;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;

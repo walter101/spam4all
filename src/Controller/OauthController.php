@@ -143,7 +143,7 @@ class OauthController extends AbstractController
         $refreshToken = json_decode($refreshTokenResponse->getContent(), true);
         $refreshToken = $this->refreshTokenRepository->saveRefreshToken($refreshToken, $loggedInUserId);
 
-        // Posible option: use refreshToken to fetch access token, and use that to access data on the Xmail server
+        // Possible option: use refreshToken to fetch access token, and use that to access data on the Xmail server
 
         return $this->render('oauth/authorization.client.redirect.url.html.twig', [
             'authorizationCode' => $authorizationCode,
